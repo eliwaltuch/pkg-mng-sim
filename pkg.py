@@ -15,8 +15,16 @@ def init_repo_db(filename):
 
 def get_pkg_state(filename):
     path = os.path.join(os.path.dirname(__file__), filename)
-    with open(path, 'r') as file:
-        return set(line.strip() for line in file)
+    try:
+        with open(path, 'r') as file:
+            return set(line.strip() for line in file)
+    except FileNotFoundError:
+        return set()
+
+def set_pkg_state(filename, pkgs):
+    path = os.path.join(os.path.dirname(__file__), filename)
+    with open(path, 'w') as file:
+        file.write('\n'.join(pkgs))
 
 def do_list(pkgs):
     for pkg in pkgs:
@@ -29,6 +37,7 @@ def main():
 
     repo = init_repo_db("repo.db")
     pkg_state = get_pkg_state("pkgs.db")
+    pkg_state = sorted(pkg_state)
     cmd = sys.argv[1]
     match cmd:
         case "install":
@@ -43,6 +52,8 @@ def main():
         case _:
             print("Invalid argument:", cmd ,"\nUsage: pkg {install PKG|uninstall PKG|list}")
             return
+
+    set_pkg_state("pkgs.db", pkg_state)
 
 if __name__ == '__main__':
     main()

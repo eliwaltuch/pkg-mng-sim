@@ -28,6 +28,8 @@ def set_pkg_state(filename, pkgs):
 
 def get_dependencies(repo, pkg):
     deps = repo.get(pkg, [])
+    for dep in deps:
+        deps.extend(get_dependencies(repo, dep))
     return deps
 
 def get_dependents(repo, pkg):

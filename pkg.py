@@ -13,12 +13,19 @@ def init_repo_db(filename):
             repo[pkg.strip()] = [dep.strip() for dep in deps.split()]
     return repo
 
+def get_pkg_state(filename):
+    path = os.path.join(os.path.dirname(__file__), filename)
+    with open(path, 'r') as file:
+        return set(line.strip() for line in file)
+
 def main():
     if len(sys.argv) < 2:
         print("Usage: pkg {install PKG|uninstall PKG|list}")
         return
 
     repo = init_repo_db("repo.db")
+    pkg_state = get_pkg_state("pkgs.db")
+    print(pkg_state)
     cmd = sys.argv[1]
     match cmd:
         case "install":

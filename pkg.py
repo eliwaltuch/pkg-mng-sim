@@ -26,6 +26,13 @@ def set_pkg_state(filename, pkgs):
     with open(path, 'w') as file:
         file.write('\n'.join(pkgs))
 
+def get_dependants(repo, pkg):
+    dependants = []
+    for package, deps in repo.items():
+        if pkg in deps:
+            dependants.append(package)
+    return set(dependants)
+
 def do_list(pkgs):
     for pkg in sorted(pkgs):
         print(pkg)
@@ -33,7 +40,14 @@ def do_list(pkgs):
 def do_install(pkg, pkgs):
     pkgs.add(pkg)
 
-def do_uninstall(pkg, pkgs):
+def do_uninstall(repo, pkg, pkgs):
+    if pkg not in pkgs:
+        print(pkg,"is not installed")
+        return
+    deps = get_dependants(repo, pkg)
+    for dep in deps:
+        if dep in pkgs:
+            pkgs.remove(dep)
     pkgs.remove(pkg)
 
 def main():
@@ -56,7 +70,7 @@ def main():
                 print("Usage: uninstall PKG")
                 return
             pkg = sys.argv[2]
-            do_uninstall(pkg, pkg_state)
+            do_uninstall(repo, pkg, pkg_state)
         case "list":
             do_list(pkg_state)
         case "help":

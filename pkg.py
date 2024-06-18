@@ -11,7 +11,6 @@ def init_repo_db(filename):
             line = line.strip()
             pkg, deps = line.split(':')
             repo[pkg.strip()] = [dep.strip() for dep in deps.split()]
-    print(repo)
     return repo
 
 def main():

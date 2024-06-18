@@ -8,6 +8,7 @@ def init_repo_db(filename):
     path = os.path.join(os.path.dirname(__file__), filename)
     with open(path, 'r') as file:
         for line in file:
+            line = line.strip()
             print(line)
 
 def main():

@@ -33,11 +33,12 @@ def get_dependencies(repo, pkg):
     return deps
 
 def get_dependents(repo, pkg):
-    dependants = []
+    dependents = []
     for package, deps in repo.items():
         if pkg in deps:
-            dependants.append(package)
-    return set(dependants)
+            dependents.append(package)
+            dependents.extend(get_dependents(repo, package))
+    return set(dependents)
 
 def do_list(pkgs):
     for pkg in sorted(pkgs):

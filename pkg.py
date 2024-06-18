@@ -9,7 +9,10 @@ def init_repo_db(filename):
     with open(path, 'r') as file:
         for line in file:
             line = line.strip()
-            print(line)
+            pkg, deps = line.split(':')
+            repo[pkg.strip()] = [dep.strip() for dep in deps.split()]
+    print(repo)
+    return repo
 
 def main():
     if len(sys.argv) < 2:

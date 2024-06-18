@@ -72,6 +72,7 @@ def main():
     repo = init_repo_db("repo.db")
     pkg_state = get_pkg_state("pkgs.db")
     cmd = sys.argv[1]
+    #new for python3.10. in older versions we would need to use if/elif/else
     match cmd:
         case "install":
             if len(sys.argv) < 3:

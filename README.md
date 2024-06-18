@@ -1,8 +1,3 @@
-# pkg-mng-sim
-Package manager simulator PoC in python
-
---- 8< ------
-
 # Package Manager Simulator
 
 Write a simulator for a package manager.
@@ -37,5 +32,3 @@ Where:
 - Solve this question using Python and the standard-libraries.
 - Submit your solution as a link to a Git repository (e.g. GitHub, GitLab, BitBucket, SourceHut, etc), or a tar-ball of a local Git repository (include the `.git/` directory).
 - Try to commit often.
-
------- >8 ---

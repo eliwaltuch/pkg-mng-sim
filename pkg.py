@@ -27,8 +27,14 @@ def set_pkg_state(filename, pkgs):
         file.write('\n'.join(pkgs))
 
 def do_list(pkgs):
-    for pkg in pkgs:
+    for pkg in sorted(pkgs):
         print(pkg)
+
+def do_install(pkg, pkgs):
+    pkgs.add(pkg)
+
+def do_uninstall(pkg, pkgs):
+    pkgs.remove(pkg)
 
 def main():
     if len(sys.argv) < 2:
@@ -37,7 +43,6 @@ def main():
 
     repo = init_repo_db("repo.db")
     pkg_state = get_pkg_state("pkgs.db")
-    pkg_state = sorted(pkg_state)
     cmd = sys.argv[1]
     match cmd:
         case "install":
@@ -45,13 +50,13 @@ def main():
                 print("Usage: install PKG")
                 return
             pkg = sys.argv[2]
-            print("Installing:",pkg)
+            do_install(pkg, pkg_state)
         case "uninstall":
             if len(sys.argv) < 3:
                 print("Usage: uninstall PKG")
                 return
             pkg = sys.argv[2]
-            print("Uninstalling:",pkg)
+            do_uninstall(pkg, pkg_state)
         case "list":
             do_list(pkg_state)
         case "help":

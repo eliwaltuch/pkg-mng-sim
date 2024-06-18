@@ -41,9 +41,17 @@ def main():
     cmd = sys.argv[1]
     match cmd:
         case "install":
-            print("Usage: install PKG")
+            if len(sys.argv) < 3:
+                print("Usage: install PKG")
+                return
+            pkg = sys.argv[2]
+            print("Installing:",pkg)
         case "uninstall":
-            print("Usage: uninstall PKG")
+            if len(sys.argv) < 3:
+                print("Usage: uninstall PKG")
+                return
+            pkg = sys.argv[2]
+            print("Uninstalling:",pkg)
         case "list":
             do_list(pkg_state)
         case "help":
